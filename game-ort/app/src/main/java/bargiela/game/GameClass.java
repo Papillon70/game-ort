@@ -107,16 +107,17 @@ public class GameClass {
 
             Log.d("Front layer","Set player in place");
             SetPlayerInPlace();
-            addEnemy();
+            super.schedule("addEnemy", 1.5f);
+            //super.unschedule("addEnemy");
             SetGameTitle();
             Log.d("Front layer","Frontlayer set correctly");
         }
 
-        public void SetPlayerInPlace(){
+       public void SetPlayerInPlace(){
             Log.d("SetPlayerInPlace","Start putting player in place");
 
             Log.d("SetPlayerInPlace","Instance sprite");
-            Player=Sprite.sprite("player.png");
+            Player= Sprite.sprite("player.png");
 
             float InitialPositionX, InitialPositionY;
             InitialPositionX=ScreenDevice.width/2;
@@ -161,7 +162,8 @@ public class GameClass {
 
         }
 
-        void addEnemy(){
+        public void addEnemy(float TimeDifference){
+
             Log.d("AddEnemy","Instance enemy sprite");
             Enemy = Sprite.sprite("enemy.png");
 
@@ -195,22 +197,28 @@ public class GameClass {
 
             Log.d("AddEnemy","Add sprite to layer");
             super.addChild(Enemy);
-
-            public GameLayer extends Layer() {
-                SetPlayerInPlace();
-
-                super.schedule("AddAnEnemy",3.0f);
-            }
-
-            public void AddAnEnemy(float TimeDifference){
-
-            }
         }
 
+        boolean IntersectionBetweenSprites (Sprite sprite1, Sprite sprite2){
+            boolean Return = false;
+
+            int Sprite1left, Sprite1right, Sprite1down, Sprite1up;
+            int Sprite2left, Sprite2right, Sprite2down, Sprite2up;
+
+            Sprite1left = (int) (sprite1.getPositionX() - sprite1.getWidth()/2);
+            Sprite1right = (int) (sprite1.getPositionX() + sprite1.getWidth()/2);
+            Sprite1down = (int) (sprite1.getPositionY() - sprite1.getHeight()/2);
+            Sprite1up = (int) (sprite1.getPositionY() + sprite1.getHeight()/2);
+
+            Sprite2left = (int) (sprite1.getPositionX() - sprite1.getWidth()/2);
+            Sprite2right = (int) (sprite1.getPositionX() + sprite1.getWidth()/2);
+            Sprite2down = (int) (sprite1.getPositionY() - sprite1.getHeight()/2);
+            Sprite2up = (int) (sprite1.getPositionY() + sprite1.getHeight()/2);
+
+            return Return;
+        }
     }
-
-
-
-
-
 }
+
+
+
