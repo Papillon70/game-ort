@@ -110,6 +110,7 @@ public class GameClass {
             super.schedule("addEnemy", 1.5f);
             //super.unschedule("addEnemy");
             SetGameTitle();
+            super.schedule("IntersectionBetweenSprites",1.5f);
             Log.d("Front layer","Frontlayer set correctly");
         }
 
@@ -210,12 +211,20 @@ public class GameClass {
             Sprite1down = (int) (sprite1.getPositionY() - sprite1.getHeight()/2);
             Sprite1up = (int) (sprite1.getPositionY() + sprite1.getHeight()/2);
 
-            Sprite2left = (int) (sprite1.getPositionX() - sprite1.getWidth()/2);
-            Sprite2right = (int) (sprite1.getPositionX() + sprite1.getWidth()/2);
-            Sprite2down = (int) (sprite1.getPositionY() - sprite1.getHeight()/2);
-            Sprite2up = (int) (sprite1.getPositionY() + sprite1.getHeight()/2);
+            Sprite2left = (int) (sprite2.getPositionX() - sprite2.getWidth()/2);
+            Sprite2right = (int) (sprite2.getPositionX() + sprite2.getWidth()/2);
+            Sprite2down = (int) (sprite2.getPositionY() - sprite2.getHeight()/2);
+            Sprite2up = (int) (sprite2.getPositionY() + sprite2.getHeight()/2);
+
+            Log.d("Intersection","SPRITE 1 - Izq: " + Sprite1left + " - Der: " + Sprite1right+" - Down: "+ Sprite1down+ " - Up: "+ Sprite1up);
+            Log.d("Intersection","SPRITE 2 - Izq: " + Sprite2left + " - Der: " + Sprite2right+" - Down: "+ Sprite2down+ " - Up: "+ Sprite2up);
+
 
             return Return;
+        }
+
+        boolean IsBetween (int NumberToCompare, int Max, int Min){
+            return true;
         }
     }
 }
