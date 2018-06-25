@@ -220,14 +220,86 @@ public class GameClass {
             Log.d("Intersection","SPRITE 2 - Izq: " + Sprite2left + " - Der: " + Sprite2right+" - Down: "+ Sprite2down+ " - Up: "+ Sprite2up);
 
 
+            //Left and bottom side of SPRITE 1 are inside SPRITE 2
+            if (IsBetween(Sprite1left, Sprite2left, Sprite2right) &&
+            IsBetween(Sprite1down, Sprite2down, Sprite2up)) {
+                Log.d("Intersection","1");
+                Return=true;
+            }
+
+            //Left and top side of SPRITE 1 are inside SPRITE 2
+            if (IsBetween(Sprite1left, Sprite2left, Sprite2right) &&
+            IsBetween(Sprite1up, Sprite2down, Sprite2up)) {
+                Log.d("Intersection","2");
+                Return=true;
+            }
+
+            //Right and top side of SPRITE 1 are inside SPRITE 2
+            if (IsBetween(Sprite1right, Sprite2left, Sprite2right) &&
+            IsBetween(Sprite1up, Sprite2down, Sprite2up)) {
+                Log.d("Intersection","3");
+                Return=true;
+            }
+
+            //Right and bottom side of SPRITE 1 are inside SPRITE 2
+            if (IsBetween(Sprite1right, Sprite2left, Sprite2right) &&
+            IsBetween(Sprite1down, Sprite2down, Sprite2up)) {
+                Log.d("Intersection","4");
+                Return=true;
+            }
+
+            //Left bottom side of SPRITE 2 are inside SPRITE 1
+            if (IsBetween(Sprite2left, Sprite1left, Sprite1right) &&
+            IsBetween(Sprite2down, Sprite1down, Sprite1up)) {
+                Log.d("Intersection","5");
+                Return=true;
+            }
+
+            //Left top side of SPRITE 2 is inside SPRITE 1
+            if (IsBetween(Sprite2left, Sprite1left, Sprite1right) &&
+            IsBetween(Sprite2up, Sprite1down, Sprite1up)) {
+                Log.d("Intersection","6");
+                Return=true;
+            }
+            //Right top side of SPRITE 2 is inside SPRITE 1
+            if (IsBetween(Sprite2right, Sprite1left, Sprite1right) &&
+            IsBetween(Sprite2up, Sprite1down, Sprite1up)) {
+                Log.d("Intersection","7");
+                Return=true;
+            }
+            //Right bottom side of SPRITE 2 is inside SPRITE 1
+            if (IsBetween(Sprite2right, Sprite1left, Sprite1right) &&
+            IsBetween(Sprite2down, Sprite1down, Sprite1up)) {
+                Log.d("Intersection","8");
+                Return=true;
+            }
             return Return;
+
+
         }
 
         boolean IsBetween (int NumberToCompare, int Max, int Min){
-            return true;
+            boolean Return = false;
+
+            Log.d("Isbetween","Min: " + Min + " - Max: " + Max);
+
+            if(Min > Max){
+                Log.d("IsBetween","Got params inverted, I'll fix that");
+                int aux;
+                aux = Max;
+                Max = Min;
+                Min = aux;
+
+                    if(NumberToCompare >= Min && NumberToCompare <= Max){
+                        Log.d("IsBetween","Number is, indeed, between the two params");
+                        Return = true;
+                    } else {
+                        Log.d("IsBetween","Number is NOT in between the two params");
+                        Return = false;
+                    }
+            }
+
+            return Return;
         }
     }
 }
-
-
-
