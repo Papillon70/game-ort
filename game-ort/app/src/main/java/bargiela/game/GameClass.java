@@ -1,7 +1,7 @@
 package bargiela.game;
 
-import android.text.method.BaseKeyListener;
 import android.util.Log;
+import android.view.MotionEvent;
 
 import org.cocos2d.actions.interval.MoveTo;
 import org.cocos2d.actions.interval.RotateTo;
@@ -13,9 +13,8 @@ import org.cocos2d.nodes.Scene;
 import org.cocos2d.nodes.Sprite;
 import org.cocos2d.opengl.CCGLSurfaceView;
 import org.cocos2d.types.CCColor3B;
-import org.cocos2d.types.CCPoint;
 import org.cocos2d.types.CCSize;
-
+import java.util.ArrayList;
 import java.util.Random;
 
 public class GameClass {
@@ -101,18 +100,53 @@ public class GameClass {
         }
     }
 
-    class FrontLayer extends Layer {
+
+        class FrontLayer extends Layer {
+
+        ArrayList<Sprite> arrEnemies;
+
         public FrontLayer(){
             Log.d("Front layer","Begins constructor of front layer");
 
             Log.d("Front layer","Set player in place");
             SetPlayerInPlace();
+
+            Log.d("Front layer","Set enemies in place");
             super.schedule("addEnemy", 1.5f);
             //super.unschedule("addEnemy");
+
+            Log.d("Front layer","Initialize array of enemies");
+            arrEnemies = new ArrayList<>();
+
+            Log.d("Front layer","Set up touch control");
+            this.setIsTouchEnabled(true);
+
             SetGameTitle();
-            super.schedule("IntersectionBetweenSprites",1.5f);
             Log.d("Front layer","Frontlayer set correctly");
         }
+
+            @Override
+            public boolean ccTouchesBegan(MotionEvent event){
+                Log.d("Touch","Begins touch - X: "+ event.getX() + " - Y: " + event.getY());
+                MovePlayer(event.getX(), Player.getHeight()/2);
+                return true;
+            }
+
+            void MovePlayer (float destinyX, float destinyY){
+            Player.setPosition(destinyX, destinyY);
+            }
+
+            @Override
+            public boolean ccTouchesMoved(MotionEvent event){
+                Log.d("MovedTouch","Moves touch - X: "+ event.getX() + " - Y: " + event.getY());
+                return true;
+            }
+
+            @Override
+            public boolean ccTouchesEnded(MotionEvent event){
+                Log.d("LiftTouch","Lifts up touch - X: "+ event.getX() + " - Y: " + event.getY());
+                return true;
+            }
 
        public void SetPlayerInPlace(){
             Log.d("SetPlayerInPlace","Start putting player in place");
@@ -195,6 +229,12 @@ public class GameClass {
 
             Log.d("AddEnemy","Give order to move until final position");
             Enemy.runAction(MoveTo.action(3, FinalPositionX, FinalPositionY));
+
+            Log.d("AddEnemy","Give order to move until final position");
+            arrEnemies.add(Enemy);
+            Log.d("AddEnemy","There are: "+ arrEnemies.size()+" Pablos falling towards Ulysses");
+
+            detectCoalition();
 
             Log.d("AddEnemy","Add sprite to layer");
             super.addChild(Enemy);
@@ -300,6 +340,26 @@ public class GameClass {
             }
 
             return Return;
+        }
+
+        void detectCoalition(){
+            Log.d("detectCoalition","Verify the "+ arrEnemies.size() +" enemies");
+            boolean thereIsCoalition = false;
+
+            for (Sprite enemyToVerify: arrEnemies){
+                if(IntersectionBetweenSprites(Player, enemyToVerify)) {
+                    Log.d("detectCoalition","BOOOOOOOOM deaa");
+                    thereIsCoalition = true;
+                }
+            }
+
+            if(thereIsCoalition == true){
+                Log.d("detectCoalition","There was coalition");
+            } else {
+                Log.d("detectCoalition","There was no coalition");
+            }
+
+
         }
     }
 }
