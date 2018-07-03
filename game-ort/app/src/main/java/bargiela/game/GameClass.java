@@ -17,9 +17,11 @@ import org.cocos2d.types.CCSize;
 import java.util.ArrayList;
 import java.util.Random;
 
+
 public class GameClass {
     CCGLSurfaceView _GameView;
     CCSize ScreenDevice;
+
 
     Sprite Player;
     Sprite Background;
@@ -104,6 +106,7 @@ public class GameClass {
         class FrontLayer extends Layer {
 
         ArrayList<Sprite> arrEnemies;
+        Boolean touched;
 
         public FrontLayer(){
             Log.d("Front layer","Begins constructor of front layer");
@@ -128,17 +131,21 @@ public class GameClass {
             @Override
             public boolean ccTouchesBegan(MotionEvent event){
                 Log.d("Touch","Begins touch - X: "+ event.getX() + " - Y: " + event.getY());
-                MovePlayer(event.getX(), Player.getHeight()/2);
-                return true;
-            }
 
-            void MovePlayer (float destinyX, float destinyY){
-            Player.setPosition(destinyX, destinyY);
+                /*if(playerIsTouched(event, Player)) {
+                touched=true;
+                }*/
+
+                return true;
             }
 
             @Override
             public boolean ccTouchesMoved(MotionEvent event){
                 Log.d("MovedTouch","Moves touch - X: "+ event.getX() + " - Y: " + event.getY());
+                MovePlayer(event.getX(), Player.getHeight()/2);
+                /*if(touched){
+                    Log.d("Bioshock","JUGADOR SE MOVIOOOO");
+                }*/
                 return true;
             }
 
@@ -147,6 +154,28 @@ public class GameClass {
                 Log.d("LiftTouch","Lifts up touch - X: "+ event.getX() + " - Y: " + event.getY());
                 return true;
             }
+
+
+            void MovePlayer (float destinyX, float destinyY){
+                Player.setPosition(destinyX, destinyY);
+            }
+
+            /*public boolean playerIsTouched (MotionEvent b, Sprite sprite){
+
+            boolean a;
+            int maxX=(int) (sprite.getPositionX() + sprite.getWidth()/2);
+            int minX=(int) (sprite.getPositionX() - sprite.getWidth()/2);
+            int maxY=(int) (sprite.getPositionY() + sprite.getHeight()/2);
+            int minY=(int) (sprite.getPositionY() - sprite.getHeight()/2);
+
+            if (IsBetween((int)b.getX(), maxX, minX) && IsBetween((int)b.getY(), maxY, minY)){
+                    a = true;
+                    Log.d("Bioshock","El dedo toco al jugador");
+                } else {a = false;
+                    Log.d("Bioshock","OOOOLEEEEE deaa");}
+
+        return a;
+        }*/
 
        public void SetPlayerInPlace(){
             Log.d("SetPlayerInPlace","Start putting player in place");
@@ -321,7 +350,7 @@ public class GameClass {
         boolean IsBetween (int NumberToCompare, int Max, int Min){
             boolean Return = false;
 
-            Log.d("Isbetween","Min: " + Min + " - Max: " + Max);
+            Log.d("IsBetween","Min: " + Min + " - Max: " + Max);
 
             if(Min > Max){
                 Log.d("IsBetween","Got params inverted, I'll fix that");
